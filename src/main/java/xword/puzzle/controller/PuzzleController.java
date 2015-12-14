@@ -6,6 +6,7 @@ import xword.puzzle.objects.Puzzle;
 /**
  * Created by alex on 12/13/15.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/puzzle")
 public class PuzzleController {
