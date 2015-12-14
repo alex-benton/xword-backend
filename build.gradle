@@ -27,9 +27,14 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.hashids:hashids:1.0.1")
     testCompile("junit:junit")
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
+}
+
+task stage {
+    dependsOn build
 }

@@ -1,5 +1,5 @@
 package xword.puzzle.controller;
-import org.springframework.util.MultiValueMap;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import xword.puzzle.objects.Puzzle;
 
@@ -20,9 +20,9 @@ public class PuzzleController {
         return null;
     }
 
-    @RequestMapping(method=RequestMethod.POST, path="/")
-    public void createPuzzle(@RequestParam(name="puzzle") MultiValueMap<String, String> puzzle) {
-
+    @RequestMapping(method=RequestMethod.POST, path="", consumes="application/json")
+    public void createPuzzle(@RequestBody LinkedMultiValueMap<String, String> request) {
+        System.out.println(request);
     }
 
 }
