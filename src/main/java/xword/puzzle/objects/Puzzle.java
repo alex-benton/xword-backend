@@ -12,7 +12,6 @@ public class Puzzle {
     @Id
     private String puzzleId;
     private String puzzleEditId;
-
     private List<List<Character>> board;
     private List<Clue> clues;
 

@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
 import xword.puzzle.repository.PuzzleRepository;
+import xword.util.IdGenerator;
+
+import java.util.UUID;
 
 /**
  * @author alex
@@ -25,6 +28,13 @@ public class PuzzleManagerImpl implements PuzzleManager {
     @Override
     public Puzzle get(String id) {
         return puzzleRepository.findOne(id);
+    }
+
+    @Override
+    public Puzzle save(Puzzle puzzle) {
+        puzzle.setPuzzleEditId(IdGenerator.generate());
+        puzzle = puzzleRepository.save(puzzle);
+        return puzzle;
     }
 
 }

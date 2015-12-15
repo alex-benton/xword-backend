@@ -14,4 +14,6 @@ public interface PuzzleManager {
      * @return the found Puzzle, or null if a Puzzle couldn't be found.
      */
     Puzzle get(String id);
+
+    Puzzle save(Puzzle puzzle);
 }

@@ -2,18 +2,22 @@ package xword.puzzle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xword.util.EntityMapper;
 import xword.puzzle.controller.entities.CreatePuzzleRequest;
 import xword.puzzle.controller.entities.CreatePuzzleResponse;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
 
 /**
- * Created by alex on 12/13/15.
+ *
  */
 @RestController
 @CrossOrigin
 @RequestMapping("/puzzle")
 public class PuzzleController {
+
+    @Autowired
+    private EntityMapper entityMapper;
 
     @Autowired
     private PuzzleManager puzzleManager;
@@ -30,8 +34,10 @@ public class PuzzleController {
 
     @RequestMapping(method=RequestMethod.POST, path="", consumes="application/json")
     public CreatePuzzleResponse createPuzzle(@RequestBody CreatePuzzleRequest request) {
-        System.out.println(request);
-        return null;
+        return entityMapper.map(
+                puzzleManager.save(
+                        entityMapper.map(request, Puzzle.class))
+                , CreatePuzzleResponse.class);
     }
 
 }

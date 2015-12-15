@@ -27,8 +27,8 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile("org.hashids:hashids:1.0.1")
     compile("org.apache.commons:commons-lang3:3.4")
+    compile("commons-codec:commons-codec:1.10")
     testCompile("junit:junit")
 }
 
