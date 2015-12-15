@@ -14,6 +14,10 @@ public class PuzzleToGetPuzzleByEditIdResponseMapper implements EntityMappingStr
 
     @Override
     public GetPuzzleByEditIdResponse map(Puzzle source) {
+        if (source == null) {
+            return null;
+        }
+
         GetPuzzleByEditIdResponse result = new GetPuzzleByEditIdResponse();
         result.setId(source.getPuzzleId());
         result.setEditId(source.getPuzzleEditId());

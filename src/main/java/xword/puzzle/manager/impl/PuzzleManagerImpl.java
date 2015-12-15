@@ -1,13 +1,12 @@
 package xword.puzzle.manager.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
 import xword.puzzle.repository.PuzzleRepository;
 import xword.util.IdGenerator;
-
-import java.util.UUID;
 
 /**
  * @author alex
@@ -27,6 +26,9 @@ public class PuzzleManagerImpl implements PuzzleManager {
      */
     @Override
     public Puzzle get(String id) {
+        if (id == null) {
+            return null;
+        }
         return puzzleRepository.findOne(id);
     }
 
@@ -39,6 +41,9 @@ public class PuzzleManagerImpl implements PuzzleManager {
      */
     @Override
     public Puzzle getByEditId(String editId) {
+        if (StringUtils.isBlank(editId)) {
+            return null;
+        }
         return puzzleRepository.findByPuzzleEditId(editId);
     }
 
@@ -50,6 +55,9 @@ public class PuzzleManagerImpl implements PuzzleManager {
      */
     @Override
     public Puzzle save(Puzzle puzzle) {
+        if (puzzle == null) {
+            return null;
+        }
         puzzle.setPuzzleEditId(IdGenerator.generate());
         puzzle = puzzleRepository.save(puzzle);
         return puzzle;

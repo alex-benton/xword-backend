@@ -13,6 +13,10 @@ public class PuzzleToCreatePuzzleResponseMapper implements EntityMappingStrategy
 
     @Override
     public CreatePuzzleResponse map(Puzzle source) {
+        if (source == null) {
+            return null;
+        }
+
         CreatePuzzleResponse result = new CreatePuzzleResponse();
         result.setEditId(source.getPuzzleEditId());
         result.setId(source.getPuzzleId());

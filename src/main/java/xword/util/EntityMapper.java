@@ -115,6 +115,11 @@ public class EntityMapper {
 
     @SuppressWarnings("unchecked")
     public <T> T map(Object source, Class<T> destinationClass) {
+        if (source == null) {
+            return null;
+        } else if (destinationClass == null) {
+            throw new EntityMappingException("exception while attempting to map entities: destination class was null");
+        }
         MapperPair pair = new MapperPair(source.getClass(), destinationClass);
         if (entityMap.containsKey(pair)) {
             return (T) entityMap.get(pair).map(source);

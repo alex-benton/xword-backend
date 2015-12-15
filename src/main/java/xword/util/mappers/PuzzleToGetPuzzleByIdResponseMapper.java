@@ -1,7 +1,7 @@
 package xword.util.mappers;
 
+import org.jetbrains.annotations.Contract;
 import org.springframework.stereotype.Component;
-import xword.puzzle.controller.entities.CreatePuzzleResponse;
 import xword.puzzle.controller.entities.GetPuzzleByIdResponse;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Puzzle;
@@ -19,13 +19,18 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
 
     @Override
     public GetPuzzleByIdResponse map(Puzzle source) {
-        GetPuzzleByIdResponse result = new GetPuzzleByIdResponse();
-        result.setId(source.getPuzzleId());
-        result.setClues(this.mapClues(source.getClues()));
-        result.setBoard(this.mapBoard(source.getBoard()));
-        return result;
+        if (source == null) {
+            return null;
+        } else {
+            GetPuzzleByIdResponse result = new GetPuzzleByIdResponse();
+            result.setId(source.getPuzzleId());
+            result.setClues(this.mapClues(source.getClues()));
+            result.setBoard(this.mapBoard(source.getBoard()));
+            return result;
+        }
     }
 
+    @Contract("null -> null")
     private List<GetPuzzleByIdResponse.ResponseClue> mapClues(List<Clue> clues) {
         if (clues == null) {
             return null;
@@ -34,6 +39,7 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
+    @Contract("null -> null")
     private List<List<Character>> mapBoard(List<List<Character>> board) {
         if (board == null) {
             return null;

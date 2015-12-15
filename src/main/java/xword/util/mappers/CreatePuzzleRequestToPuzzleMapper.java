@@ -13,6 +13,10 @@ public class CreatePuzzleRequestToPuzzleMapper implements EntityMappingStrategy<
 
     @Override
     public Puzzle map(CreatePuzzleRequest source) {
+        if (source == null) {
+            return null;
+        }
+
         Puzzle puzzle = new Puzzle();
         puzzle.setBoard(source.getBoard());
         puzzle.setClues(source.getClues());
