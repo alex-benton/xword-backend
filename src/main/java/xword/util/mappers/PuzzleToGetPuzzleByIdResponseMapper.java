@@ -1,6 +1,5 @@
 package xword.util.mappers;
 
-import org.jetbrains.annotations.Contract;
 import org.springframework.stereotype.Component;
 import xword.puzzle.controller.entities.GetPuzzleByIdResponse;
 import xword.puzzle.objects.Clue;
@@ -30,7 +29,6 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
-    @Contract("null -> null")
     private List<GetPuzzleByIdResponse.ResponseClue> mapClues(List<Clue> clues) {
         if (clues == null) {
             return null;
@@ -39,7 +37,6 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
-    @Contract("null -> null")
     private List<List<Character>> mapBoard(List<List<Character>> board) {
         if (board == null) {
             return null;
