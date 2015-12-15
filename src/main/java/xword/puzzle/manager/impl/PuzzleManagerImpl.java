@@ -30,6 +30,24 @@ public class PuzzleManagerImpl implements PuzzleManager {
         return puzzleRepository.findOne(id);
     }
 
+    /**
+     * Get the Puzzle with the provided editId.
+     * Returns null if a Puzzle can't be found for the provided editId.
+     *
+     * @param editId the editId of the puzzle to get.
+     * @return the found Puzzle, or null if a Puzzle couldn't be found.
+     */
+    @Override
+    public Puzzle getByEditId(String editId) {
+        return puzzleRepository.findByPuzzleEditId(editId);
+    }
+
+    /**
+     * Save the provided Puzzle.
+     *
+     * @param puzzle the puzzle to save
+     * @return the puzzle, possibly modified as a result of the save operation
+     */
     @Override
     public Puzzle save(Puzzle puzzle) {
         puzzle.setPuzzleEditId(IdGenerator.generate());

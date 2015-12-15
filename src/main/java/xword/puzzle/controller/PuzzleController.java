@@ -2,6 +2,8 @@ package xword.puzzle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xword.puzzle.controller.entities.GetPuzzleByEditIdResponse;
+import xword.puzzle.controller.entities.GetPuzzleByIdResponse;
 import xword.util.EntityMapper;
 import xword.puzzle.controller.entities.CreatePuzzleRequest;
 import xword.puzzle.controller.entities.CreatePuzzleResponse;
@@ -23,13 +25,13 @@ public class PuzzleController {
     private PuzzleManager puzzleManager;
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}")
-    public Puzzle getPuzzleById(@PathVariable String id) {
-        return null;
+    public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) {
+        return entityMapper.map(puzzleManager.get(id), GetPuzzleByIdResponse.class);
     }
 
     @RequestMapping(method=RequestMethod.GET, path="/edit/{editId}")
-    public Puzzle getPuzzleByEditId(@PathVariable String editId) {
-        return null;
+    public GetPuzzleByEditIdResponse getPuzzleByEditId(@PathVariable String editId) {
+        return entityMapper.map(puzzleManager.getByEditId(editId), GetPuzzleByEditIdResponse.class);
     }
 
     @RequestMapping(method=RequestMethod.POST, path="", consumes="application/json")
