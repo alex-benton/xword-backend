@@ -58,9 +58,52 @@ public class PuzzleManagerImpl implements PuzzleManager {
         if (puzzle == null) {
             return null;
         }
-        puzzle.setPuzzleEditId(IdGenerator.generate());
-        puzzle = puzzleRepository.save(puzzle);
-        return puzzle;
+
+        if (StringUtils.isBlank(puzzle.getPuzzleEditId())) {
+            puzzle.setPuzzleEditId(IdGenerator.generate());
+        }
+
+        return puzzleRepository.save(puzzle);
+    }
+
+    /**
+     * Update the provided Puzzle.
+     *
+     * @param puzzle the puzzle to update
+     * @return the updated puzzle
+     */
+    @Override
+    public Puzzle update(Puzzle puzzle) {
+        return this.save(puzzle);
+    }
+
+    /**
+     * Patch an existing Puzzle with fields from the provided Puzzle.
+     *
+     * @param puzzle the puzzle to patch
+     * @return the patched puzzle
+     */
+    @Override
+    public Puzzle patch(Puzzle puzzle) {
+        if (puzzle == null) {
+            return null;
+        }
+
+        Puzzle existing = this.get(puzzle.getPuzzleId());
+
+        if (existing == null) {
+            return null;
+        }
+
+        if (puzzle.getBoard() != null) {
+            existing.setBoard(puzzle.getBoard());
+        }
+
+        if (puzzle.getClues() != null) {
+            existing.setClues(puzzle.getClues());
+        }
+
+        return this.update(existing);
     }
 
 }

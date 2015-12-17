@@ -45,7 +45,23 @@ public class PuzzleController {
                 , CreatePuzzleResponse.class);
     }
 
+    @RequestMapping(method=RequestMethod.PUT, path="", consumes="application/json")
+    public UpdatePuzzleResponse updatePuzzle(@RequestBody UpdatePuzzleRequest request) {
+        return entityMapper.map(
+                puzzleManager.update(
+                        entityMapper.map(request, Puzzle.class))
+                , UpdatePuzzleResponse.class);
+
+    }
+
     // answer GET endpoints
+    @RequestMapping(method=RequestMethod.PATCH, path="", consumes="application/json")
+    public UpdatePuzzleResponse patchPuzzle(@RequestBody UpdatePuzzleRequest request) {
+        return entityMapper.map(
+                puzzleManager.patch(
+                        entityMapper.map(request, Puzzle.class))
+                , UpdatePuzzleResponse.class);
+    }
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}/board/answer")
     public GetBoardAnswerResponse getBoardAnswer(@PathVariable String id) {

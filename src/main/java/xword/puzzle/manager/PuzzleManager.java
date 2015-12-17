@@ -32,4 +32,21 @@ public interface PuzzleManager {
      * @return the puzzle, possibly modified as a result of the save operation
      */
     Puzzle save(Puzzle puzzle);
+
+    /**
+     * Update the provided Puzzle.
+     *
+     * @param puzzle the puzzle to update
+     * @return the updated puzzle
+     */
+    Puzzle update(Puzzle puzzle);
+
+    /**
+     * Patch an existing Puzzle with fields from the provided Puzzle.
+     *
+     * @param puzzle the puzzle to patch
+     * @return the patched puzzle
+     */
+    Puzzle patch(Puzzle puzzle);
+
 }
