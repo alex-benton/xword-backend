@@ -1,9 +1,6 @@
-package xword.puzzle.controller.entities;
+package xword.puzzle.controller.beans;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import xword.puzzle.objects.Clue;
-
-import java.util.List;
 
 /**
  * @author alex

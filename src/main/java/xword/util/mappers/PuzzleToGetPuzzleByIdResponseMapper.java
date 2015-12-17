@@ -1,7 +1,7 @@
 package xword.util.mappers;
 
 import org.springframework.stereotype.Component;
-import xword.puzzle.controller.entities.GetPuzzleByIdResponse;
+import xword.puzzle.controller.beans.GetPuzzleByIdResponse;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Puzzle;
 import xword.util.EntityMappingStrategy;

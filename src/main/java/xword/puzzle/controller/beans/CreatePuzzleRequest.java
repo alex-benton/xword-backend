@@ -1,4 +1,4 @@
-package xword.puzzle.controller.entities;
+package xword.puzzle.controller.beans;
 
 import xword.puzzle.objects.Clue;
 

@@ -2,7 +2,7 @@ package xword.puzzle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import xword.puzzle.controller.entities.*;
+import xword.puzzle.controller.beans.*;
 import xword.puzzle.manager.AnswerManager;
 import xword.util.EntityMapper;
 import xword.puzzle.manager.PuzzleManager;
@@ -26,7 +26,7 @@ public class PuzzleController {
     private AnswerManager answerManager;
 
     // puzzle CRUD endpoints
-    
+
     @RequestMapping(method=RequestMethod.GET, path="/{id}")
     public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) {
         return entityMapper.map(puzzleManager.get(id), GetPuzzleByIdResponse.class);
@@ -62,6 +62,21 @@ public class PuzzleController {
         return new GetCharAnswerResponse(answerManager.getCharacterAnswer(request.getX(), request.getY(), id));
     }
 
+    // verify GET endpoints
 
+    @RequestMapping(method=RequestMethod.GET, path="/{id}/board/verify")
+    public VerifyBoardAnswerResponse verifyBoardAnswer(@PathVariable String id, @RequestBody VerifyBoardAnswerRequest request) {
+        return new VerifyBoardAnswerResponse(answerManager.verifyBoardAnswer(request.getAnswer(), id));
+    }
+
+    @RequestMapping(method=RequestMethod.GET, path="/{id}/clue/verify")
+    public VerifyClueAnswerResponse verifyClueAnswer(@PathVariable String id, @RequestBody VerifyClueAnswerRequest request) {
+        return new VerifyClueAnswerResponse(answerManager.verifyClueAnswer(request.getAnswer(), request.getNumber(), request.getDirection(), id));
+    }
+
+    @RequestMapping(method=RequestMethod.GET, path="/{id}/char/verify")
+    public VerifyCharAnswerResponse verifyCharAnswer(@PathVariable String id, @RequestBody VerifyCharAnswerRequest request) {
+        return new VerifyCharAnswerResponse(answerManager.verifyCharacterAnswer(request.getCharacter(), request.getX(),request.getY(), id));
+    }
 
 }

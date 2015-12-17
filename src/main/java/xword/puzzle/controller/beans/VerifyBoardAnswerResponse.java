@@ -1,23 +1,25 @@
-package xword.puzzle.controller.entities;
+package xword.puzzle.controller.beans;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.List;
 
 /**
  * @author alex
  */
-public class GetCharAnswerResponse {
+public class VerifyBoardAnswerResponse {
 
-    private char answer;
+    private List<List<Boolean>> answer;
 
-    public GetCharAnswerResponse(char answer) {
+    public VerifyBoardAnswerResponse(List<List<Boolean>> answer) {
         this.answer = answer;
     }
 
-    public char getAnswer() {
+    public List<List<Boolean>> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(char answer) {
+    public void setAnswer(List<List<Boolean>> answer) {
         this.answer = answer;
     }
 

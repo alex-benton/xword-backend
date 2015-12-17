@@ -1,4 +1,4 @@
-package xword.puzzle.controller.entities;
+package xword.puzzle.controller.beans;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -7,19 +7,15 @@ import java.util.List;
 /**
  * @author alex
  */
-public class GetClueAnswerResponse {
+public class VerifyBoardAnswerRequest {
 
-    private List<Character> answer;
+    private List<List<Character>> answer;
 
-    public GetClueAnswerResponse(List<Character> answer) {
-        this.answer = answer;
-    }
-
-    public List<Character> getAnswer() {
+    public List<List<Character>> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<Character> answer) {
+    public void setAnswer(List<List<Character>> answer) {
         this.answer = answer;
     }
 
