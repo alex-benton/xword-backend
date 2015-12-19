@@ -10,18 +10,9 @@ import java.util.List;
  */
 public class UpdatePuzzleRequest {
 
-    private String id;
     private String editId;
     private List<Clue> clues;
     private List<List<Character>> board;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getEditId() {
         return editId;
@@ -50,7 +41,6 @@ public class UpdatePuzzleRequest {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("id", id)
                 .append("editId", editId)
                 .append("clues", clues)
                 .append("board", board)

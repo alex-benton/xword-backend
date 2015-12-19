@@ -74,6 +74,12 @@ public class PuzzleManagerImpl implements PuzzleManager {
      */
     @Override
     public Puzzle update(Puzzle puzzle) {
+        Puzzle existing = this.getByEditId(puzzle.getPuzzleEditId());
+
+        if (existing != null) {
+            puzzle.setPuzzleId(existing.getPuzzleId());
+        }
+
         return this.save(puzzle);
     }
 
@@ -89,7 +95,7 @@ public class PuzzleManagerImpl implements PuzzleManager {
             return null;
         }
 
-        Puzzle existing = this.get(puzzle.getPuzzleId());
+        Puzzle existing = this.getByEditId(puzzle.getPuzzleEditId());
 
         if (existing == null) {
             return null;
