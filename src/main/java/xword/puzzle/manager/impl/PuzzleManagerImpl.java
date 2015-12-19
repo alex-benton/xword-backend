@@ -77,10 +77,12 @@ public class PuzzleManagerImpl implements PuzzleManager {
         Puzzle existing = this.getByEditId(puzzle.getPuzzleEditId());
 
         if (existing != null) {
-            puzzle.setPuzzleId(existing.getPuzzleId());
+            existing.setBoard(puzzle.getBoard());
+            existing.setClues(puzzle.getClues());
+            return this.save(existing);
+        } else {
+            return this.save(puzzle);
         }
-
-        return this.save(puzzle);
     }
 
     /**
@@ -109,7 +111,7 @@ public class PuzzleManagerImpl implements PuzzleManager {
             existing.setClues(puzzle.getClues());
         }
 
-        return this.update(existing);
+        return this.save(existing);
     }
 
 }
