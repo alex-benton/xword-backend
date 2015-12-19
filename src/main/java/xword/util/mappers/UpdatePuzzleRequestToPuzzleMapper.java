@@ -19,7 +19,6 @@ public class UpdatePuzzleRequestToPuzzleMapper implements EntityMappingStrategy<
         }
 
         Puzzle puzzle = new Puzzle();
-        puzzle.setPuzzleId(source.getId());
         puzzle.setPuzzleEditId(source.getEditId());
         puzzle.setBoard(source.getBoard());
         puzzle.setClues(source.getClues());

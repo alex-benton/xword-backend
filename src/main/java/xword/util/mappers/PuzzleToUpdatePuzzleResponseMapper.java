@@ -21,8 +21,6 @@ public class PuzzleToUpdatePuzzleResponseMapper implements EntityMappingStrategy
         UpdatePuzzleResponse response = new UpdatePuzzleResponse();
         response.setId(source.getPuzzleId());
         response.setEditId(source.getPuzzleEditId());
-        response.setBoard(source.getBoard());
-        response.setClues(source.getClues());
         return response;
     }
 }
