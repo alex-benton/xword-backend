@@ -22,6 +22,8 @@ public class PuzzleToGetPuzzleByEditIdResponseMapper implements EntityMappingStr
         result.setEditId(source.getPuzzleEditId());
         result.setClues(source.getClues());
         result.setBoard(source.getBoard());
+        result.setMetadata(source.getMetadata());
+
         return result;
     }
 }

@@ -3,6 +3,7 @@ package xword.puzzle.controller.beans;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Direction;
+import xword.puzzle.objects.PuzzleMetadata;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class GetPuzzleByIdResponse {
     private String id;
     private List<List<Character>> board;
     private List<ResponseClue> clues;
+    private PuzzleMetadata metadata;
 
     public String getId() {
         return id;
@@ -63,12 +65,21 @@ public class GetPuzzleByIdResponse {
         this.clues = clues;
     }
 
+    public PuzzleMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(PuzzleMetadata metadata) {
+        this.metadata = metadata;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("board", board)
                 .append("clues", clues)
+                .append("metadata", metadata)
                 .toString();
     }
 }

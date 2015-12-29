@@ -1,6 +1,7 @@
 package xword.puzzle.controller.beans;
 
 import xword.puzzle.objects.Clue;
+import xword.puzzle.objects.PuzzleMetadata;
 
 import java.util.List;
 
@@ -11,6 +12,15 @@ public class CreatePuzzleRequest {
 
     private List<List<Character>> board;
     private List<Clue> clues;
+    private PuzzleMetadata metadata;
+
+    public PuzzleMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(PuzzleMetadata metadata) {
+        this.metadata = metadata;
+    }
 
     public List<List<Character>> getBoard() {
         return board;
