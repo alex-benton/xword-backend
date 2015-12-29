@@ -63,6 +63,12 @@ public class PuzzleManagerImpl implements PuzzleManager {
             puzzle.setPuzzleEditId(IdGenerator.generate());
         }
 
+        if (puzzle.getCreatedDate() == null) {
+            puzzle.setCreatedDate(System.currentTimeMillis());
+        }
+
+        puzzle.setModifiedDate(System.currentTimeMillis());
+
         return puzzleRepository.save(puzzle);
     }
 

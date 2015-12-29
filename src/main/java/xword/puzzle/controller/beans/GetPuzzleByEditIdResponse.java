@@ -16,6 +16,8 @@ public class GetPuzzleByEditIdResponse {
     private PuzzleMetadata metadata;
     private List<List<Character>> board;
     private List<Clue> clues;
+    private Long modifiedDate;
+    private Long createdDate;
 
     public String getId() {
         return id;
@@ -55,6 +57,22 @@ public class GetPuzzleByEditIdResponse {
 
     public void setMetadata(PuzzleMetadata metadata) {
         this.metadata = metadata;
+    }
+
+    public Long getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Long modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public Long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Long createdDate) {
+        this.createdDate = createdDate;
     }
 
     @Override
