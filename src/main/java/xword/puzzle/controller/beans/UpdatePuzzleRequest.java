@@ -2,6 +2,7 @@ package xword.puzzle.controller.beans;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import xword.puzzle.objects.Clue;
+import xword.puzzle.objects.PuzzleMetadata;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class UpdatePuzzleRequest {
     private String editId;
     private List<Clue> clues;
     private List<List<Character>> board;
+    private PuzzleMetadata metadata;
 
     public String getEditId() {
         return editId;
@@ -38,12 +40,21 @@ public class UpdatePuzzleRequest {
         this.board = board;
     }
 
+    public PuzzleMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(PuzzleMetadata metadata) {
+        this.metadata = metadata;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("editId", editId)
                 .append("clues", clues)
                 .append("board", board)
+                .append("metadata", metadata)
                 .toString();
     }
 }

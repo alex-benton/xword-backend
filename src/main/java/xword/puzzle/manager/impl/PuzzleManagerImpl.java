@@ -63,6 +63,12 @@ public class PuzzleManagerImpl implements PuzzleManager {
             puzzle.setPuzzleEditId(IdGenerator.generate());
         }
 
+        if (puzzle.getCreatedDate() == null) {
+            puzzle.setCreatedDate(System.currentTimeMillis());
+        }
+
+        puzzle.setModifiedDate(System.currentTimeMillis());
+
         return puzzleRepository.save(puzzle);
     }
 
@@ -79,6 +85,7 @@ public class PuzzleManagerImpl implements PuzzleManager {
         if (existing != null) {
             existing.setBoard(puzzle.getBoard());
             existing.setClues(puzzle.getClues());
+            existing.setMetadata(puzzle.getMetadata());
             return this.save(existing);
         } else {
             return this.save(puzzle);
@@ -109,6 +116,31 @@ public class PuzzleManagerImpl implements PuzzleManager {
 
         if (puzzle.getClues() != null) {
             existing.setClues(puzzle.getClues());
+        }
+
+        if (puzzle.getMetadata() != null) {
+            if (existing.getMetadata() == null) {
+                existing.setMetadata(puzzle.getMetadata());
+            } else {
+                if (puzzle.getMetadata().getAuthor() != null) {
+                    existing.getMetadata().setAuthor(puzzle.getMetadata().getAuthor());
+                }
+                if (puzzle.getMetadata().getDescription() != null) {
+                    existing.getMetadata().setDescription(puzzle.getMetadata().getDescription());
+                }
+                if (puzzle.getMetadata().getDifficulty() != null) {
+                    existing.getMetadata().setDifficulty(puzzle.getMetadata().getDifficulty());
+                }
+                if (puzzle.getMetadata().getEditor() != null) {
+                    existing.getMetadata().setEditor(puzzle.getMetadata().getEditor());
+                }
+                if (puzzle.getMetadata().getSource() != null) {
+                    existing.getMetadata().setSource(puzzle.getMetadata().getSource());
+                }
+                if (puzzle.getMetadata().getTitle() != null) {
+                    existing.getMetadata().setTitle(puzzle.getMetadata().getTitle());
+                }
+            }
         }
 
         return this.save(existing);

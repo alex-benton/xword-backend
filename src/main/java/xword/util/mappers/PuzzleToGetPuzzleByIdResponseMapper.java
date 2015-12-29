@@ -25,6 +25,10 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
             result.setId(source.getPuzzleId());
             result.setClues(this.mapClues(source.getClues()));
             result.setBoard(this.mapBoard(source.getBoard()));
+            result.setMetadata(source.getMetadata());
+            result.setCreatedDate(source.getCreatedDate());
+            result.setModifiedDate(source.getModifiedDate());
+
             return result;
         }
     }

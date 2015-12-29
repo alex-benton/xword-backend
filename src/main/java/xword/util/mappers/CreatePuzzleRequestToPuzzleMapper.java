@@ -20,6 +20,8 @@ public class CreatePuzzleRequestToPuzzleMapper implements EntityMappingStrategy<
         Puzzle puzzle = new Puzzle();
         puzzle.setBoard(source.getBoard());
         puzzle.setClues(source.getClues());
+        puzzle.setMetadata(source.getMetadata());
+
         return puzzle;
     }
 }
