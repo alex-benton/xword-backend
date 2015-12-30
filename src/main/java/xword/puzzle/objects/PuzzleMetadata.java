@@ -2,6 +2,8 @@ package xword.puzzle.objects;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.Date;
+
 /**
  * @author alex
  */
@@ -13,6 +15,7 @@ public class PuzzleMetadata {
     private String editor;
     private String source;
     private String description;
+    private Date date;
 
     public String getTitle() {
         return title;
@@ -62,6 +65,14 @@ public class PuzzleMetadata {
         this.description = description;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -71,6 +82,7 @@ public class PuzzleMetadata {
                 .append("editor", editor)
                 .append("source", source)
                 .append("description", description)
+                .append("date", date)
                 .toString();
     }
 }

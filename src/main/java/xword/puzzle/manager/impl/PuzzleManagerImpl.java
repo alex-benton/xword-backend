@@ -140,6 +140,9 @@ public class PuzzleManagerImpl implements PuzzleManager {
                 if (puzzle.getMetadata().getTitle() != null) {
                     existing.getMetadata().setTitle(puzzle.getMetadata().getTitle());
                 }
+                if (puzzle.getMetadata().getDate() != null) {
+                    existing.getMetadata().setDate(puzzle.getMetadata().getDate());
+                }
             }
         }
 
