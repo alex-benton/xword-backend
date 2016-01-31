@@ -74,7 +74,7 @@ public class PuzzleController {
     @RequestMapping(method=RequestMethod.GET, path="/{id}/clue/answer")
     public GetClueAnswerResponse getClueAnswer(@PathVariable String id, @RequestParam("direction") String direction, @RequestParam("number") Integer number) {
         GetClueAnswerRequest request = new GetClueAnswerRequest();
-        request.setDirection(Direction.fromString(direction));
+        request.setDirection(Direction.valueOf(direction));
         request.setNumber(number);
         return new GetClueAnswerResponse(answerManager.getClueAnswer(request.getNumber(), request.getDirection(), id));
     }
