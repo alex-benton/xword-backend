@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xword.puzzle.controller.beans.*;
 import xword.puzzle.manager.AnswerManager;
+import xword.puzzle.objects.Direction;
 import xword.util.EntityMapper;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
@@ -54,7 +55,6 @@ public class PuzzleController {
 
     }
 
-    // answer GET endpoints
     @RequestMapping(method=RequestMethod.PATCH, path="", consumes="application/json")
     public UpdatePuzzleResponse patchPuzzle(@RequestBody UpdatePuzzleRequest request) {
         return entityMapper.map(
@@ -63,34 +63,43 @@ public class PuzzleController {
                 , UpdatePuzzleResponse.class);
     }
 
+
+    // answer GET endpoints
+
     @RequestMapping(method=RequestMethod.GET, path="/{id}/board/answer")
     public GetBoardAnswerResponse getBoardAnswer(@PathVariable String id) {
         return new GetBoardAnswerResponse(answerManager.getBoardAnswer(id));
     }
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}/clue/answer")
-    public GetClueAnswerResponse getClueAnswer(@PathVariable String id, @RequestBody GetClueAnswerRequest request) {
+    public GetClueAnswerResponse getClueAnswer(@PathVariable String id, @RequestParam("direction") String direction, @RequestParam("number") Integer number) {
+        GetClueAnswerRequest request = new GetClueAnswerRequest();
+        request.setDirection(Direction.fromString(direction));
+        request.setNumber(number);
         return new GetClueAnswerResponse(answerManager.getClueAnswer(request.getNumber(), request.getDirection(), id));
     }
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}/char/answer")
-    public GetCharAnswerResponse getCharAnswer(@PathVariable String id, @RequestBody GetCharAnswerRequest request) {
+    public GetCharAnswerResponse getCharAnswer(@PathVariable String id, @RequestParam("x") Integer x, @RequestParam("y") Integer y) {
+        GetCharAnswerRequest request = new GetCharAnswerRequest();
+        request.setX(x);
+        request.setY(y);
         return new GetCharAnswerResponse(answerManager.getCharacterAnswer(request.getX(), request.getY(), id));
     }
 
-    // verify GET endpoints
+    // verify POST endpoints
 
-    @RequestMapping(method=RequestMethod.GET, path="/{id}/board/verify")
+    @RequestMapping(method=RequestMethod.POST, path="/{id}/board/verify")
     public VerifyBoardAnswerResponse verifyBoardAnswer(@PathVariable String id, @RequestBody VerifyBoardAnswerRequest request) {
         return new VerifyBoardAnswerResponse(answerManager.verifyBoardAnswer(request.getAnswer(), id));
     }
 
-    @RequestMapping(method=RequestMethod.GET, path="/{id}/clue/verify")
+    @RequestMapping(method=RequestMethod.POST, path="/{id}/clue/verify")
     public VerifyClueAnswerResponse verifyClueAnswer(@PathVariable String id, @RequestBody VerifyClueAnswerRequest request) {
         return new VerifyClueAnswerResponse(answerManager.verifyClueAnswer(request.getAnswer(), request.getNumber(), request.getDirection(), id));
     }
 
-    @RequestMapping(method=RequestMethod.GET, path="/{id}/char/verify")
+    @RequestMapping(method=RequestMethod.POST, path="/{id}/char/verify")
     public VerifyCharAnswerResponse verifyCharAnswer(@PathVariable String id, @RequestBody VerifyCharAnswerRequest request) {
         return new VerifyCharAnswerResponse(answerManager.verifyCharacterAnswer(request.getCharacter(), request.getX(),request.getY(), id));
     }
