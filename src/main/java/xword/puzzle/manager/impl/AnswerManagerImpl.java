@@ -23,6 +23,9 @@ public class AnswerManagerImpl implements AnswerManager {
 
     @Override
     public boolean verifyCharacterAnswer(Character c, int x, int y, String puzzleId) {
+        if (c == null) {
+            return false;
+        }
         return c.equals(this.getCharacterAnswer(x, y, puzzleId));
     }
 
