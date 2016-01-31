@@ -67,7 +67,9 @@ public class AnswerManagerImpl implements AnswerManager {
 
             List<Boolean> verifiedRow = new ArrayList<>(answer.get(y).size());
             for (int x = 0; x < board.get(y).size(); x++) {
-                verifiedRow.add(board.get(y).get(x).equals(answer.get(y).get(x)));
+                Character actual = board.get(y).get(x);
+                Character expected = answer.get(y).get(x);
+                verifiedRow.add((actual == null && expected == null) || (actual.equals(expected)));
             }
 
             verifiedBoard.add(verifiedRow);
