@@ -84,7 +84,7 @@ public class AnswerManagerImpl implements AnswerManager {
             throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
-        if (puzzle.getBoard().size() < y || puzzle.getBoard().get(y).size() > x) {
+        if (y >= puzzle.getBoard().size() || x >= puzzle.getBoard().get(y).size()) {
             throw new InvalidInputException("the provided coordinates (" + x + "," + y + ") were out of range of puzzle: " + puzzleId);
         }
 
