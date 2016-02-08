@@ -3,8 +3,10 @@ package xword.puzzle.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xword.puzzle.controller.beans.*;
+import xword.puzzle.controller.exception.PuzzleNotFoundException;
 import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.objects.Direction;
+import xword.puzzle.objects.PuzzleMetadata;
 import xword.util.EntityMapper;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
@@ -29,13 +31,21 @@ public class PuzzleController {
     // puzzle CRUD endpoints
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}")
-    public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) {
-        return entityMapper.map(puzzleManager.get(id), GetPuzzleByIdResponse.class);
+    public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) throws PuzzleNotFoundException {
+        Puzzle puzzle = puzzleManager.get(id);
+        if (puzzle == null) {
+            throw new PuzzleNotFoundException();
+        }
+        return entityMapper.map(puzzle, GetPuzzleByIdResponse.class);
     }
 
     @RequestMapping(method=RequestMethod.GET, path="/edit/{editId}")
-    public GetPuzzleByEditIdResponse getPuzzleByEditId(@PathVariable String editId) {
-        return entityMapper.map(puzzleManager.getByEditId(editId), GetPuzzleByEditIdResponse.class);
+    public GetPuzzleByEditIdResponse getPuzzleByEditId(@PathVariable String editId) throws PuzzleNotFoundException {
+        Puzzle puzzle = puzzleManager.getByEditId(editId);
+        if (puzzle == null) {
+            throw new PuzzleNotFoundException();
+        }
+        return entityMapper.map(puzzle, GetPuzzleByEditIdResponse.class);
     }
 
     @RequestMapping(method=RequestMethod.POST, path="", consumes="application/json")
