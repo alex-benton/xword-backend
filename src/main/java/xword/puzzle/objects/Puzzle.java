@@ -3,7 +3,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by alex on 12/13/15.
@@ -13,7 +12,8 @@ public class Puzzle {
     @Id
     private String puzzleId;
     private String puzzleEditId;
-    private List<List<Character>> board;
+    private List<List<String>> board;
+    private List<List<Box>> boardV2;
     private List<Clue> clues;
     private PuzzleMetadata metadata;
     private Long createdDate;
@@ -35,11 +35,11 @@ public class Puzzle {
         this.puzzleEditId = puzzleEditId;
     }
 
-    public List<List<Character>> getBoard() {
+    public List<List<String>> getBoard() {
         return board;
     }
 
-    public void setBoard(List<List<Character>> board) {
+    public void setBoard(List<List<String>> board) {
         this.board = board;
     }
 
@@ -73,6 +73,14 @@ public class Puzzle {
 
     public void setModifiedDate(Long modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public List<List<Box>> getBoardV2() {
+        return boardV2;
+    }
+
+    public void setBoardV2(List<List<Box>> boardV2) {
+        this.boardV2 = boardV2;
     }
 
     @Override

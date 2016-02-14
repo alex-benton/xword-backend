@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class VerifyBoardAnswerRequest {
 
-    private List<List<Character>> answer;
+    private List<List<String>> answer;
 
-    public List<List<Character>> getAnswer() {
+    public List<List<String>> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<List<Character>> answer) {
+    public void setAnswer(List<List<String>> answer) {
         this.answer = answer;
     }
 

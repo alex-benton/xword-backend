@@ -1,6 +1,7 @@
 package xword.puzzle.controller.beans;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.PuzzleMetadata;
 
@@ -14,7 +15,8 @@ public class GetPuzzleByEditIdResponse {
     private String id;
     private String editId;
     private PuzzleMetadata metadata;
-    private List<List<Character>> board;
+    private List<List<String>> board;
+    private List<List<Box>> boardV2;
     private List<Clue> clues;
     private Long modifiedDate;
     private Long createdDate;
@@ -35,11 +37,11 @@ public class GetPuzzleByEditIdResponse {
         this.editId = editId;
     }
 
-    public List<List<Character>> getBoard() {
+    public List<List<String>> getBoard() {
         return board;
     }
 
-    public void setBoard(List<List<Character>> board) {
+    public void setBoard(List<List<String>> board) {
         this.board = board;
     }
 

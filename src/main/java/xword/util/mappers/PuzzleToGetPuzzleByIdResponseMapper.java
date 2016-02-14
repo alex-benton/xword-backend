@@ -41,13 +41,13 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
-    private List<List<Character>> mapBoard(List<List<Character>> board) {
+    private List<List<String>> mapBoard(List<List<String>> board) {
         if (board == null) {
             return null;
         } else {
-            List<List<Character>> result = new ArrayList<>(board.size());
-            for (List<Character> row : board) {
-                result.add(row.stream().map(c -> c == null ? null : ' ').collect(Collectors.toList()));
+            List<List<String>> result = new ArrayList<>(board.size());
+            for (List<String> row : board) {
+                result.add(row.stream().map(c -> c == null ? null : " ").collect(Collectors.toList()));
             }
             return result;
         }

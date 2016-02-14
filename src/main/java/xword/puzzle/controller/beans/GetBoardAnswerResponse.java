@@ -9,17 +9,17 @@ import java.util.List;
  */
 public class GetBoardAnswerResponse {
 
-    private List<List<Character>> answer;
+    private List<List<String>> answer;
 
-    public GetBoardAnswerResponse(List<List<Character>> answer) {
+    public GetBoardAnswerResponse(List<List<String>> answer) {
         this.answer = answer;
     }
 
-    public List<List<Character>> getAnswer() {
+    public List<List<String>> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<List<Character>> answer) {
+    public void setAnswer(List<List<String>> answer) {
         this.answer = answer;
     }
 

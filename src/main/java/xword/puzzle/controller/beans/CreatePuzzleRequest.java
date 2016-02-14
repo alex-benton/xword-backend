@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class CreatePuzzleRequest {
 
-    private List<List<Character>> board;
+    private List<List<String>> board;
     private List<Clue> clues;
     private PuzzleMetadata metadata;
 
@@ -22,11 +22,11 @@ public class CreatePuzzleRequest {
         this.metadata = metadata;
     }
 
-    public List<List<Character>> getBoard() {
+    public List<List<String>> getBoard() {
         return board;
     }
 
-    public void setBoard(List<List<Character>> board) {
+    public void setBoard(List<List<String>> board) {
         this.board = board;
     }
 

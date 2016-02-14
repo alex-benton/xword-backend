@@ -12,7 +12,7 @@ public class VerifyClueAnswerRequest {
 
     private int number;
     private Direction direction;
-    private List<Character> answer;
+    private List<String> answer;
 
     public int getNumber() {
         return number;
@@ -30,11 +30,11 @@ public class VerifyClueAnswerRequest {
         this.direction = direction;
     }
 
-    public List<Character> getAnswer() {
+    public List<String> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<Character> answer) {
+    public void setAnswer(List<String> answer) {
         this.answer = answer;
     }
 

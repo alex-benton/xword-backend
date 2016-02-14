@@ -13,7 +13,7 @@ public class UpdatePuzzleRequest {
 
     private String editId;
     private List<Clue> clues;
-    private List<List<Character>> board;
+    private List<List<String>> board;
     private PuzzleMetadata metadata;
 
     public String getEditId() {
@@ -32,11 +32,11 @@ public class UpdatePuzzleRequest {
         this.clues = clues;
     }
 
-    public List<List<Character>> getBoard() {
+    public List<List<String>> getBoard() {
         return board;
     }
 
-    public void setBoard(List<List<Character>> board) {
+    public void setBoard(List<List<String>> board) {
         this.board = board;
     }
 

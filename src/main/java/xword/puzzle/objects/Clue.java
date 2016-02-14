@@ -12,7 +12,7 @@ public class Clue {
     private int number;
     private Direction direction;
     private String text;
-    private List<Character> answer;
+    private List<String> answer;
 
     public int getNumber() {
         return number;
@@ -38,11 +38,11 @@ public class Clue {
         this.text = text;
     }
 
-    public List<Character> getAnswer() {
+    public List<String> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<Character> answer) {
+    public void setAnswer(List<String> answer) {
         this.answer = answer;
     }
 

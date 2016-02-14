@@ -9,7 +9,7 @@ public class VerifyCharAnswerRequest {
 
     private int x;
     private int y;
-    private Character character;
+    private String character;
 
     public int getX() {
         return x;
@@ -27,11 +27,11 @@ public class VerifyCharAnswerRequest {
         this.y = y;
     }
 
-    public Character getCharacter() {
+    public String getCharacter() {
         return character;
     }
 
-    public void setCharacter(Character character) {
+    public void setCharacter(String character) {
         this.character = character;
     }
 

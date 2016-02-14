@@ -1,5 +1,6 @@
 package xword.puzzle.manager;
 
+import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Direction;
 
 import java.util.List;
@@ -9,16 +10,18 @@ import java.util.List;
  */
 public interface AnswerManager {
 
-    boolean verifyCharacterAnswer(Character c, int x, int y, String puzzleId);
+    boolean verifyCharacterAnswer(String c, int x, int y, String puzzleId);
 
-    List<Boolean> verifyClueAnswer(List<Character> c, int clueNumber, Direction direction, String puzzleId);
+    List<Boolean> verifyClueAnswer(List<String> c, int clueNumber, Direction direction, String puzzleId);
 
-    List<List<Boolean>> verifyBoardAnswer(List<List<Character>> board, String puzzleId);
+    List<List<Boolean>> verifyBoardAnswer(List<List<String>> board, String puzzleId);
 
-    Character getCharacterAnswer(int x, int y, String puzzleId);
+    String getCharacterAnswer(int x, int y, String puzzleId);
 
-    List<Character> getClueAnswer(int clueNumber, Direction direction, String puzzleId);
+    List<String> getClueAnswer(int clueNumber, Direction direction, String puzzleId);
 
-    List<List<Character>> getBoardAnswer(String puzzleId);
+    List<List<String>> getBoardAnswer(String puzzleId);
+
+    List<List<Box>> getBoardV2Answer(String puzzleId);
 
 }

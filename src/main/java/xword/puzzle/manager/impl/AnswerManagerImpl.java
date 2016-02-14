@@ -1,9 +1,11 @@
 package xword.puzzle.manager.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.manager.PuzzleManager;
+import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Direction;
 import xword.puzzle.objects.Puzzle;
@@ -22,7 +24,7 @@ public class AnswerManagerImpl implements AnswerManager {
     private PuzzleManager puzzleManager;
 
     @Override
-    public boolean verifyCharacterAnswer(Character c, int x, int y, String puzzleId) {
+    public boolean verifyCharacterAnswer(String c, int x, int y, String puzzleId) {
         if (c == null) {
             return false;
         }
@@ -30,13 +32,13 @@ public class AnswerManagerImpl implements AnswerManager {
     }
 
     @Override
-    public List<Boolean> verifyClueAnswer(List<Character> c, int clueNumber, Direction direction, String puzzleId) {
+    public List<Boolean> verifyClueAnswer(List<String> c, int clueNumber, Direction direction, String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
         if (puzzle == null) {
             throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
-        List<Character> answer = this.getClueAnswer(clueNumber, direction, puzzleId);
+        List<String> answer = this.getClueAnswer(clueNumber, direction, puzzleId);
 
         if (answer.size() != c.size()) {
             throw new InvalidInputException("the provided answer is sized incorrectly. size was: " + c.size() + ", expected: " + answer.size());
@@ -52,8 +54,8 @@ public class AnswerManagerImpl implements AnswerManager {
     }
 
     @Override
-    public List<List<Boolean>> verifyBoardAnswer(List<List<Character>> board, String puzzleId) {
-        List<List<Character>> answer = this.getBoardAnswer(puzzleId);
+    public List<List<Boolean>> verifyBoardAnswer(List<List<String>> board, String puzzleId) {
+        List<List<String>> answer = this.getBoardAnswer(puzzleId);
 
         if (answer.size() != board.size()) {
             throw new InvalidInputException("the provided answer board is sized incorrectly. height was: " + board.size() + ", expected: " + answer.size());
@@ -67,9 +69,9 @@ public class AnswerManagerImpl implements AnswerManager {
 
             List<Boolean> verifiedRow = new ArrayList<>(answer.get(y).size());
             for (int x = 0; x < board.get(y).size(); x++) {
-                Character actual = board.get(y).get(x);
-                Character expected = answer.get(y).get(x);
-                verifiedRow.add((actual == null && expected == null) || (actual.equals(expected)));
+                String actual = board.get(y).get(x);
+                String expected = answer.get(y).get(x);
+                verifiedRow.add((actual == null && expected == null) || StringUtils.equalsIgnoreCase(actual, expected));
             }
 
             verifiedBoard.add(verifiedRow);
@@ -79,7 +81,7 @@ public class AnswerManagerImpl implements AnswerManager {
     }
 
     @Override
-    public Character getCharacterAnswer(int x, int y, String puzzleId) {
+    public String getCharacterAnswer(int x, int y, String puzzleId) {
         if (x < 0 || y < 0) {
             throw new InvalidInputException("the provided coordinates (" + x + "," + y + ") were invalid.");
         }
@@ -97,7 +99,7 @@ public class AnswerManagerImpl implements AnswerManager {
     }
 
     @Override
-    public List<Character> getClueAnswer(int clueNumber, Direction direction, String puzzleId) {
+    public List<String> getClueAnswer(int clueNumber, Direction direction, String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
@@ -114,7 +116,7 @@ public class AnswerManagerImpl implements AnswerManager {
     }
 
     @Override
-    public List<List<Character>> getBoardAnswer(String puzzleId) {
+    public List<List<String>> getBoardAnswer(String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
@@ -122,6 +124,16 @@ public class AnswerManagerImpl implements AnswerManager {
         }
 
         return puzzle.getBoard();
+    }
 
+    @Override
+    public List<List<Box>> getBoardV2Answer(String puzzleId) {
+        Puzzle puzzle = puzzleManager.get(puzzleId);
+
+        if (puzzle == null) {
+            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+        }
+
+        return puzzle.getBoardV2();
     }
 }

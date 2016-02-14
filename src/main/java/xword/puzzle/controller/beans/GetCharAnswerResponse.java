@@ -7,17 +7,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class GetCharAnswerResponse {
 
-    private char answer;
+    private String answer;
 
-    public GetCharAnswerResponse(char answer) {
+    public GetCharAnswerResponse(String answer) {
         this.answer = answer;
     }
 
-    public char getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(char answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
 
