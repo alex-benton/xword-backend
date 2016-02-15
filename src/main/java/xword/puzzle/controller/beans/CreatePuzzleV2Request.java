@@ -7,6 +7,10 @@ import xword.puzzle.objects.PuzzleMetadata;
 import java.util.List;
 
 /**
+ * An object representing a request to create a puzzle.
+ *
+ * A V2 puzzle uses Box objects for the board, instead of strings.
+ *
  * @author alex
  */
 public class CreatePuzzleV2Request {

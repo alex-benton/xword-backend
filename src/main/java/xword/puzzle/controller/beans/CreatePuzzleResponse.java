@@ -3,6 +3,8 @@ package xword.puzzle.controller.beans;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
+ * An object representing the response we'll return after creating a puzzle.
+ *
  * @author alex
  */
 public class CreatePuzzleResponse {

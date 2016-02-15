@@ -6,6 +6,11 @@ import xword.puzzle.objects.Box;
 import java.util.List;
 
 /**
+ * An object representing a request to verify a provided board.
+ *
+ * A V2 puzzle uses Box objects for the board, instead of strings. However, only the value of the Box is checked for
+ * the verify request.
+ *
  * @author alex
  */
 public class VerifyBoardV2AnswerRequest {

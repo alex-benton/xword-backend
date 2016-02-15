@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 
 /**
+ * An object representing a request to verify a provided board.
+ *
  * @author alex
  */
 public class VerifyBoardAnswerRequest {

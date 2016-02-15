@@ -6,6 +6,8 @@ import xword.puzzle.objects.Clue;
 import java.util.List;
 
 /**
+ * An object representing the response we'll return after updating a puzzle.
+ *
  * @author alex
  */
 public class UpdatePuzzleResponse {

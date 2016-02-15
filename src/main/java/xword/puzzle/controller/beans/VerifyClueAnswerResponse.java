@@ -5,6 +5,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 
 /**
+ * An object representing the response to a 'verify clue answer' request. 'answer' will contain a list of
+ * boolean values. A 'true' boolean value represents that the square in the verify request was correct.
+ * A 'false' boolean value represents that the square was wrong.
+ *
  * @author alex
  */
 public class VerifyClueAnswerResponse {
