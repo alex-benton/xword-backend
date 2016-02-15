@@ -13,6 +13,7 @@ import xword.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author alex
@@ -123,17 +124,16 @@ public class AnswerManagerImpl implements AnswerManager {
             throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
-        return puzzle.getBoard();
-    }
-
-    @Override
-    public List<List<Box>> getBoardV2Answer(String puzzleId) {
-        Puzzle puzzle = puzzleManager.get(puzzleId);
-
-        if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+        if (puzzle.getBoard() != null) {
+            return puzzle.getBoard();
+        } else if (puzzle.getBoardV2() != null) {
+            return puzzle.getBoardV2().stream().map(
+                    row -> row.stream().map(
+                            box -> box.getValue()
+                    ).collect(Collectors.toList())
+            ).collect(Collectors.toList());
         }
 
-        return puzzle.getBoardV2();
+        throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
     }
 }

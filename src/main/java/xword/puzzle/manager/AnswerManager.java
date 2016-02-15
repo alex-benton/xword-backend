@@ -22,6 +22,4 @@ public interface AnswerManager {
 
     List<List<String>> getBoardAnswer(String puzzleId);
 
-    List<List<Box>> getBoardV2Answer(String puzzleId);
-
 }
