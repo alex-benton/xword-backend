@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xword.puzzle.controller.beans.*;
 import xword.puzzle.controller.exception.PuzzleNotFoundException;
+import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.manager.PuzzleManager;
+import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Puzzle;
 import xword.util.EntityMapper;
+
+import java.util.stream.Collectors;
 
 /**
  * @author alex
@@ -21,6 +25,10 @@ public class PuzzleV2Controller {
 
     @Autowired
     private EntityMapper entityMapper;
+
+    @Autowired
+    private AnswerManager answerManager;
+
 
     @RequestMapping(method= RequestMethod.GET, path="/{id}")
     public GetPuzzleV2ByIdResponse getPuzzleById(@PathVariable String id) throws PuzzleNotFoundException {
@@ -64,6 +72,12 @@ public class PuzzleV2Controller {
                 puzzleManager.patch(
                         entityMapper.map(request, Puzzle.class))
                 , UpdatePuzzleResponse.class);
+    }
+
+    @RequestMapping(method=RequestMethod.POST, path="/{id}/board/verify")
+    public VerifyBoardAnswerResponse verifyBoardAnswer(@PathVariable String id, @RequestBody VerifyBoardV2AnswerRequest request) {
+        return new VerifyBoardAnswerResponse(answerManager.verifyBoardAnswer(request.getAnswer().stream().map(
+                row -> row.stream().map(Box::getValue).collect(Collectors.toList())).collect(Collectors.toList()), id));
     }
 
 }

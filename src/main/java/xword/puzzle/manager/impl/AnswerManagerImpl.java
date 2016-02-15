@@ -127,11 +127,7 @@ public class AnswerManagerImpl implements AnswerManager {
         if (puzzle.getBoard() != null) {
             return puzzle.getBoard();
         } else if (puzzle.getBoardV2() != null) {
-            return puzzle.getBoardV2().stream().map(
-                    row -> row.stream().map(
-                            box -> box.getValue()
-                    ).collect(Collectors.toList())
-            ).collect(Collectors.toList());
+            return puzzle.getBoardV2().stream().map(row -> row.stream().map(Box::getValue).collect(Collectors.toList())).collect(Collectors.toList());
         }
 
         throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
