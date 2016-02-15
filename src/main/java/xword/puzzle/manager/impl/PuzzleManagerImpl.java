@@ -84,6 +84,7 @@ public class PuzzleManagerImpl implements PuzzleManager {
 
         if (existing != null) {
             existing.setBoard(puzzle.getBoard());
+            existing.setBoardV2(puzzle.getBoardV2());
             existing.setClues(puzzle.getClues());
             existing.setMetadata(puzzle.getMetadata());
             return this.save(existing);
@@ -112,6 +113,10 @@ public class PuzzleManagerImpl implements PuzzleManager {
 
         if (puzzle.getBoard() != null) {
             existing.setBoard(puzzle.getBoard());
+        }
+
+        if (puzzle.getBoardV2() != null) {
+            existing.setBoardV2(puzzle.getBoardV2());
         }
 
         if (puzzle.getClues() != null) {

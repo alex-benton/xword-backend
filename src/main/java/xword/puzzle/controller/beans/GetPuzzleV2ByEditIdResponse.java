@@ -10,12 +10,12 @@ import java.util.List;
 /**
  * @author alex
  */
-public class GetPuzzleByEditIdResponse {
+public class GetPuzzleV2ByEditIdResponse {
 
     private String id;
     private String editId;
     private PuzzleMetadata metadata;
-    private List<List<String>> board;
+    private List<List<Box>> board;
     private List<Clue> clues;
     private Long modifiedDate;
     private Long createdDate;
@@ -36,11 +36,11 @@ public class GetPuzzleByEditIdResponse {
         this.editId = editId;
     }
 
-    public List<List<String>> getBoard() {
+    public List<List<Box>> getBoard() {
         return board;
     }
 
-    public void setBoard(List<List<String>> board) {
+    public void setBoard(List<List<Box>> board) {
         this.board = board;
     }
 
