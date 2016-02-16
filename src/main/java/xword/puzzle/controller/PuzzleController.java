@@ -3,10 +3,10 @@ package xword.puzzle.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xword.puzzle.controller.beans.*;
+import xword.puzzle.controller.exception.InvalidPuzzleVersionException;
 import xword.puzzle.controller.exception.PuzzleNotFoundException;
 import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.objects.Direction;
-import xword.puzzle.objects.PuzzleMetadata;
 import xword.util.EntityMapper;
 import xword.puzzle.manager.PuzzleManager;
 import xword.puzzle.objects.Puzzle;
@@ -31,20 +31,31 @@ public class PuzzleController {
     // puzzle CRUD endpoints
 
     @RequestMapping(method=RequestMethod.GET, path="/{id}")
-    public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) throws PuzzleNotFoundException {
+    public GetPuzzleByIdResponse getPuzzleById(@PathVariable String id) throws PuzzleNotFoundException, InvalidPuzzleVersionException {
         Puzzle puzzle = puzzleManager.get(id);
+
         if (puzzle == null) {
             throw new PuzzleNotFoundException();
         }
+
+        if (puzzle.getBoard() == null && puzzle.getBoardV2() != null) {
+            throw new InvalidPuzzleVersionException();
+        }
+
         return entityMapper.map(puzzle, GetPuzzleByIdResponse.class);
     }
 
     @RequestMapping(method=RequestMethod.GET, path="/edit/{editId}")
-    public GetPuzzleByEditIdResponse getPuzzleByEditId(@PathVariable String editId) throws PuzzleNotFoundException {
+    public GetPuzzleByEditIdResponse getPuzzleByEditId(@PathVariable String editId) throws PuzzleNotFoundException, InvalidPuzzleVersionException {
         Puzzle puzzle = puzzleManager.getByEditId(editId);
         if (puzzle == null) {
             throw new PuzzleNotFoundException();
         }
+
+        if (puzzle.getBoard() == null && puzzle.getBoardV2() != null) {
+            throw new InvalidPuzzleVersionException();
+        }
+
         return entityMapper.map(puzzle, GetPuzzleByEditIdResponse.class);
     }
 

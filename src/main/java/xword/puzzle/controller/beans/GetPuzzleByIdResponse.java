@@ -39,7 +39,6 @@ public class GetPuzzleByIdResponse {
 
     private String id;
     private List<List<String>> board;
-    private List<List<Box>> boardV2;
     private List<ResponseClue> clues;
     private PuzzleMetadata metadata;
     private Long modifiedDate;
