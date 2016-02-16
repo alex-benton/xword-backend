@@ -14,11 +14,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Utility manager that handles mapping objects.
+ *
+ * On application initialization, scans for components implementing {@link EntityMappingStrategy} and adds
+ * them to the entityMap. Then, when {@link EntityMapper#map(Object, Class)} is called, gets the relevant
+ * mapper and uses it to convert the objects.
+ *
  * @author alex
  */
 @Component
 public class EntityMapper {
 
+    /**
+     * Object representing a map between a source Type and destination Type.
+     *
+     * Used as a key in the entityMap.
+     */
     class MapperPair {
         private Type source;
         private Type destination;
@@ -72,47 +83,74 @@ public class EntityMapper {
 
     private Map<MapperPair, EntityMappingStrategy> entityMap;
 
+    /**
+     * Initialize the entityMap from all beans in the application context implementing {@link EntityMappingStrategy}.
+     */
     @PostConstruct
     private void init() {
         Map<String, EntityMappingStrategy> map = context.getBeansOfType(EntityMappingStrategy.class);
         entityMap = new HashMap<>(map.size());
+
+        // for each bean implementing EntityMappingStrategy
         for (String key : map.keySet()) {
             EntityMappingStrategy ems = map.get(key);
+
+            // get the Type params from the implementing bean and convert it to a MapperPair
             MapperPair mapper = this._findMapperPairForMapper(ems);
-            if (mapper != null) {
-                entityMap.put(mapper, ems);
-            } else {
-                throw new IllegalStateException("exception while attempting to initialize EntityMapper: couldn't decipher EntityMappingStrategy: " + ems.getClass().getName());
+
+            // we can only have one strategy per MapperPair...
+            if (entityMap.containsKey(mapper)) {
+                throw new IllegalStateException(
+                        "exception while attempting to initialize EntityMapper: duplicate mapper between " +
+                        mapper.getSource() +
+                        " -> " +
+                        mapper.getDestination());
             }
+
+            // add the MapperPair -> EntityMappingStrategy map to the entityMap
+            entityMap.put(mapper, ems);
         }
     }
 
+    /**
+     * Get the MapperPair for a specified EntityMappingStrategy.
+     *
+     * @param ems the EntityMappingStrategy
+     * @return the source, destination pair for the EntityMappingStrategy
+     */
     private MapperPair _findMapperPairForMapper(EntityMappingStrategy ems) {
+        // go through all the interfaces that the EntityMappingStrategy object implements
         for (Type type : ems.getClass().getGenericInterfaces()) {
             ParameterizedType pt = (ParameterizedType) type;
+
+            // we're looking for the EntityMappingStrategy interface
             if (pt.getRawType().equals(EntityMappingStrategy.class)) {
+
+                // get the type arguments
                 Type[] types = pt.getActualTypeArguments();
                 if (types.length != 2) {
+                    // there should be two. (source, destination)
                     throw new IllegalStateException(
                             "exception while attempting to initialize EntityMapper: we expected type " +
                             EntityMappingStrategy.class.getTypeName() +
                             " to contain two type arguments.");
                 }
-                MapperPair mapper = new MapperPair(types[0], types[1]);
-                if (entityMap.containsKey(mapper)) {
-                    throw new IllegalStateException(
-                            "exception while attempting to initialize EntityMapper: duplicate mapper between " +
-                            types[0].getTypeName() +
-                            " -> " +
-                            types[1].getTypeName());
-                }
-                return mapper;
+
+                // make the mapper pair
+                return new MapperPair(types[0], types[1]);
             }
         }
-        return null;
+        // we failed to get the MapperPair
+        throw new IllegalStateException("exception while attempting to initialize EntityMapper: couldn't decipher EntityMappingStrategy: " + ems.getClass().getName());
     }
 
 
+    /**
+     * Map a source object to a new instance of DestinationClass.
+     *
+     * @param source the source
+     * @return an instance of DestinationClass
+     */
     @SuppressWarnings("unchecked")
     public <T> T map(Object source, Class<T> destinationClass) {
         if (source == null) {

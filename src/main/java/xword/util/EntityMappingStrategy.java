@@ -1,6 +1,8 @@
 package xword.util;
 
 /**
+ * Should be implemented by strategies to map instances of SourceClass to DestinationClass.
+ *
  * @author alex
  */
 public interface EntityMappingStrategy<SourceClass, DestinationClass> {

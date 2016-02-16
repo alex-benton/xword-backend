@@ -1,6 +1,8 @@
 package xword.puzzle.objects;
 
 /**
+ * Enum representing valid Direction values for Clues.
+ *
  * @author alex
  */
 public enum Direction {

@@ -5,14 +5,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 
 /**
+ * Object representing a Clue in a crossword puzzle.
+ *
  * @author alex
  */
 public class Clue {
 
-    private int number;
-    private Direction direction;
-    private String text;
-    private List<String> answer;
+    private int number; // the clue number. combine with direction to uniquely identify this clue in a puzzle.
+    private Direction direction; // the clue direction. combine with number to uniquely identify this clue in a puzzle.
+    private String text; // the clue text (prompt)
+    private List<String> answer; // the answer values, divided into box values
 
     public int getNumber() {
         return number;

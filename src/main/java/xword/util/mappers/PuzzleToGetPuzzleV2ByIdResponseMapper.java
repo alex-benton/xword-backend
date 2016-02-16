@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Maps a Puzzle to a GetPuzzleV2ByIdResponse object.
+ *
  * @author alex
  */
 @Component
@@ -29,8 +31,10 @@ public class PuzzleToGetPuzzleV2ByIdResponseMapper implements EntityMappingStrat
             result.setClues(this.mapClues(source.getClues()));
 
             if (source.getBoardV2() != null) {
+                // if we have a v2 board, obfuscate it
                 result.setBoard(PuzzleHelper.obfuscateV2Board(source.getBoardV2()));
             } else {
+                // if we have a v1 board, obfuscate and convert it to v2
                 result.setBoard(PuzzleHelper.obfuscateV1Board(source.getBoard()));
             }
 
@@ -42,6 +46,12 @@ public class PuzzleToGetPuzzleV2ByIdResponseMapper implements EntityMappingStrat
         }
     }
 
+    /**
+     * Obfuscate the clues by mapping the Clue objects to ResponseClues (without answers)
+     *
+     * @param clues the clue list
+     * @return the obfuscated clues
+     */
     private List<GetPuzzleV2ByIdResponse.ResponseClue> mapClues(List<Clue> clues) {
         if (clues == null) {
             return null;

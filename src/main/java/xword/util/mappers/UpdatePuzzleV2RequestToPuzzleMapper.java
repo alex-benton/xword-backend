@@ -7,6 +7,8 @@ import xword.puzzle.objects.Puzzle;
 import xword.util.EntityMappingStrategy;
 
 /**
+ * Maps a UpdatePuzzleV2Request to a Puzzle object.
+ *
  * @author alex
  */
 @Component

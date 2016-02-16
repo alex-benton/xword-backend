@@ -6,6 +6,8 @@ import xword.puzzle.objects.Puzzle;
 import xword.util.EntityMappingStrategy;
 
 /**
+ * Maps a Puzzle to a GetPuzzleByEditIdResponse object.
+ *
  * @author alex
  */
 @Component

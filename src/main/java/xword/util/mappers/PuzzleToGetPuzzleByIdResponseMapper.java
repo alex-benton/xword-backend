@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Maps a Puzzle to a GetPuzzleByIdResponse object.
+ *
  * @author alex
  */
 @Component
@@ -33,6 +35,12 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
+    /**
+     * Obfuscate the clues by mapping the Clue objects to ResponseClues (without answers)
+     *
+     * @param clues the clue list
+     * @return the obfuscated clues
+     */
     private List<GetPuzzleByIdResponse.ResponseClue> mapClues(List<Clue> clues) {
         if (clues == null) {
             return null;
@@ -41,6 +49,12 @@ public class PuzzleToGetPuzzleByIdResponseMapper implements EntityMappingStrateg
         }
     }
 
+    /**
+     * Obfuscate a board by replacing the answer values with blank spaces.
+     *
+     * @param board
+     * @return the obfuscated board
+     */
     private List<List<String>> mapBoard(List<List<String>> board) {
         if (board == null) {
             return null;

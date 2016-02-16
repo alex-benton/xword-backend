@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.Date;
 
 /**
+ * Contains metadata for a Puzzle.
+ *
  * @author alex
  */
 public class PuzzleMetadata {
