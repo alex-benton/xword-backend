@@ -12,6 +12,11 @@ public class GetCharAnswerRequest {
     private int x;
     private int y;
 
+    public GetCharAnswerRequest(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public int getX() {
         return x;
     }

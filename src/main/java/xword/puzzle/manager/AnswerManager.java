@@ -1,8 +1,6 @@
 package xword.puzzle.manager;
 
-import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Direction;
-
 import java.util.List;
 
 /**

@@ -13,6 +13,11 @@ public class GetClueAnswerRequest {
     private int number;
     private Direction direction;
 
+    public GetClueAnswerRequest(int number, Direction direction) {
+        this.number = number;
+        this.direction = direction;
+    }
+
     public int getNumber() {
         return number;
     }

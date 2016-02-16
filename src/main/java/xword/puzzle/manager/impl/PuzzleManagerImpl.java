@@ -9,6 +9,8 @@ import xword.puzzle.repository.PuzzleRepository;
 import xword.util.IdGenerator;
 
 /**
+ * Manages Puzzle resources. Contains get, save, update functionality.
+ *
  * @author alex
  */
 @Component

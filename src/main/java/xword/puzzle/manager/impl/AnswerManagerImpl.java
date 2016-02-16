@@ -3,17 +3,17 @@ package xword.puzzle.manager.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import xword.puzzle.controller.exception.PuzzleNotFoundException;
 import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.manager.PuzzleManager;
-import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Direction;
 import xword.puzzle.objects.Puzzle;
+import xword.puzzle.util.PuzzleHelper;
 import xword.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author alex
@@ -36,7 +36,7 @@ public class AnswerManagerImpl implements AnswerManager {
     public List<Boolean> verifyClueAnswer(List<String> c, int clueNumber, Direction direction, String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         List<String> answer = this.getClueAnswer(clueNumber, direction, puzzleId);
@@ -89,7 +89,7 @@ public class AnswerManagerImpl implements AnswerManager {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         if (y >= puzzle.getBoard().size() || x >= puzzle.getBoard().get(y).size()) {
@@ -104,7 +104,7 @@ public class AnswerManagerImpl implements AnswerManager {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         for (Clue clue : puzzle.getClues()) {
@@ -121,13 +121,13 @@ public class AnswerManagerImpl implements AnswerManager {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         if (puzzle.getBoard() != null) {
             return puzzle.getBoard();
         } else if (puzzle.getBoardV2() != null) {
-            return puzzle.getBoardV2().stream().map(row -> row.stream().map(Box::getValue).collect(Collectors.toList())).collect(Collectors.toList());
+            return PuzzleHelper.convertV2Board(puzzle.getBoardV2());
         }
 
         throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);

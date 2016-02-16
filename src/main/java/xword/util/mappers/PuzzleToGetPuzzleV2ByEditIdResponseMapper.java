@@ -5,6 +5,7 @@ import xword.puzzle.controller.beans.GetPuzzleByEditIdResponse;
 import xword.puzzle.controller.beans.GetPuzzleV2ByEditIdResponse;
 import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Puzzle;
+import xword.puzzle.util.PuzzleHelper;
 import xword.util.EntityMappingStrategy;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class PuzzleToGetPuzzleV2ByEditIdResponseMapper implements EntityMappingS
         if (source.getBoardV2() != null) {
             result.setBoard(source.getBoardV2());
         } else {
-            result.setBoard(this.mapLegacyBoard(source.getBoard()));
+            result.setBoard(PuzzleHelper.convertV1Board(source.getBoard()));
         }
 
         result.setMetadata(source.getMetadata());
@@ -39,22 +40,5 @@ public class PuzzleToGetPuzzleV2ByEditIdResponseMapper implements EntityMappingS
         result.setModifiedDate(source.getModifiedDate());
 
         return result;
-    }
-
-    private List<List<Box>> mapLegacyBoard(List<List<String>> board) {
-        if (board == null) {
-            return null;
-        } else {
-            return board.stream().map(
-                    row -> row.stream().map(
-                            (string) -> {
-                                Box b = new Box();
-                                b.setAttributes(null);
-                                b.setValue(string);
-                                return b;
-                            }
-                    ).collect(Collectors.toList())
-                ).collect(Collectors.toList());
-        }
     }
 }
