@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * A simple route to check if this service is alive.
+ *
  * @author alex
  */
 @RestController
@@ -12,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/healthcheck")
 public class HealthcheckController {
 
+    /**
+     * Returns 'alive'.
+     *
+     * @return String
+     */
     @RequestMapping(path="")
     public String healthcheck() {
         return "alive";

@@ -5,6 +5,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 
 /**
+ * An object representing the response for a 'get board answer' request. 'answer' will contain the
+ * string value of the solved board.
+ *
  * @author alex
  */
 public class GetBoardAnswerResponse {

@@ -3,17 +3,17 @@ package xword.puzzle.manager.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import xword.puzzle.controller.exception.PuzzleNotFoundException;
 import xword.puzzle.manager.AnswerManager;
 import xword.puzzle.manager.PuzzleManager;
-import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Clue;
 import xword.puzzle.objects.Direction;
 import xword.puzzle.objects.Puzzle;
+import xword.puzzle.util.PuzzleHelper;
 import xword.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author alex
@@ -24,53 +24,88 @@ public class AnswerManagerImpl implements AnswerManager {
     @Autowired
     private PuzzleManager puzzleManager;
 
+    /**
+     * Evaluate whether the provided 'guess' matches the value found at (x,y) in the Puzzle indicated by
+     * the specified puzzleId.
+     *
+     * @param guess the 'guess' value
+     * @param x the x position of the Box we're guessing
+     * @param y the y position of the Box we're guessing
+     * @param puzzleId the puzzleId of the puzzle we're guessing for
+     * @return true if the guess is correct, false otherwise
+     */
     @Override
-    public boolean verifyCharacterAnswer(String c, int x, int y, String puzzleId) {
-        if (c == null) {
+    public boolean verifyCharacterAnswer(String guess, int x, int y, String puzzleId) {
+        if (guess == null) {
             return false;
         }
-        return c.equals(this.getCharacterAnswer(x, y, puzzleId));
+
+        // verify the guess
+        return guess.equals(this.getCharacterAnswer(x, y, puzzleId));
     }
 
+    /**
+     * Evaluate whether the provided 'guess' matches the Clue with direction and clueNumber in the Puzzle
+     * indicated by the specified puzzleId.
+     *
+     * @param guess the 'guess' value
+     * @param clueNumber the clueNumber of the Clue we're guessing
+     * @param direction the direction of the Clue we're guessing
+     * @param puzzleId the puzzleId of the puzzle we're guessing for
+     * @return  a List<Boolean>. contains 'true' or 'false' for each value in 'guess', indicating that the
+     *          box value was valid or invalid respectively.
+     */
     @Override
-    public List<Boolean> verifyClueAnswer(List<String> c, int clueNumber, Direction direction, String puzzleId) {
+    public List<Boolean> verifyClueAnswer(List<String> guess, int clueNumber, Direction direction, String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         List<String> answer = this.getClueAnswer(clueNumber, direction, puzzleId);
 
-        if (answer.size() != c.size()) {
-            throw new InvalidInputException("the provided answer is sized incorrectly. size was: " + c.size() + ", expected: " + answer.size());
+        if (answer.size() != guess.size()) {
+            throw new InvalidInputException("the provided answer is sized incorrectly. size was: " + guess.size() + ", expected: " + answer.size());
         }
 
         List<Boolean> verifiedClue = new ArrayList<>(answer.size());
 
+        // verify the values in the guess
         for (int i = 0; i < answer.size(); i++) {
-            verifiedClue.add(answer.get(i).equals(c.get(i)));
+            verifiedClue.add(answer.get(i).equals(guess.get(i)));
         }
 
         return verifiedClue;
     }
 
+    /**
+     * Evaluate whether the provided 'guess' matches the board in the Puzzle indicated by the specified
+     * puzzleId.
+     *
+     * @param guess the 'guess' value
+     * @param puzzleId the puzzleId of the puzzle we're guessing for
+     * @return  a List<List<Boolean>>. contains 'true' or 'false' for each value in 'guess', indicating that
+     *          the box value was valid or invalid respectively.
+     */
     @Override
-    public List<List<Boolean>> verifyBoardAnswer(List<List<String>> board, String puzzleId) {
+    public List<List<Boolean>> verifyBoardAnswer(List<List<String>> guess, String puzzleId) {
         List<List<String>> answer = this.getBoardAnswer(puzzleId);
 
-        if (answer.size() != board.size()) {
-            throw new InvalidInputException("the provided answer board is sized incorrectly. height was: " + board.size() + ", expected: " + answer.size());
+        if (answer.size() != guess.size()) {
+            throw new InvalidInputException("the provided answer guess is sized incorrectly. height was: " + guess.size() + ", expected: " + answer.size());
         }
 
         List<List<Boolean>> verifiedBoard = new ArrayList<>(answer.size());
-        for (int y = 0; y < board.size(); y++) {
-            if (board.get(y).size() != answer.get(y).size()) {
-                throw new InvalidInputException("the provided answer board is sized incorrectly. width was: " + board.get(y).size() + ", expected: " + answer.get(y).size());
+
+        // verify the guess
+        for (int y = 0; y < guess.size(); y++) {
+            if (guess.get(y).size() != answer.get(y).size()) {
+                throw new InvalidInputException("the provided answer guess is sized incorrectly. width was: " + guess.get(y).size() + ", expected: " + answer.get(y).size());
             }
 
             List<Boolean> verifiedRow = new ArrayList<>(answer.get(y).size());
-            for (int x = 0; x < board.get(y).size(); x++) {
-                String actual = board.get(y).get(x);
+            for (int x = 0; x < guess.get(y).size(); x++) {
+                String actual = guess.get(y).get(x);
                 String expected = answer.get(y).get(x);
                 verifiedRow.add((actual == null && expected == null) || StringUtils.equalsIgnoreCase(actual, expected));
             }
@@ -81,6 +116,14 @@ public class AnswerManagerImpl implements AnswerManager {
         return verifiedBoard;
     }
 
+    /**
+     * Get the value for the box at (x,y) in the Puzzle indicated by the specified puzzleId.
+     *
+     * @param x the x position of the box we want answered
+     * @param y the y position of the box we want answered
+     * @param puzzleId the puzzleId of the puzzle we want answered
+     * @return  the value of the box at position (x,y)
+     */
     @Override
     public String getCharacterAnswer(int x, int y, String puzzleId) {
         if (x < 0 || y < 0) {
@@ -89,7 +132,7 @@ public class AnswerManagerImpl implements AnswerManager {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         if (y >= puzzle.getBoard().size() || x >= puzzle.getBoard().get(y).size()) {
@@ -99,12 +142,21 @@ public class AnswerManagerImpl implements AnswerManager {
         return puzzle.getBoard().get(y).get(x);
     }
 
+    /**
+     * Get the value for the Clue with provided direction/clueNumber in the Puzzle indicated by the
+     * specified puzzleId.
+     *
+     * @param clueNumber the clueNumber of the Clue we want answered
+     * @param direction the direction of the Clue we want answered
+     * @param puzzleId the puzzleId of the puzzle we want answered
+     * @return  the value of the Clue
+     */
     @Override
     public List<String> getClueAnswer(int clueNumber, Direction direction, String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         for (Clue clue : puzzle.getClues()) {
@@ -116,18 +168,24 @@ public class AnswerManagerImpl implements AnswerManager {
         throw new InvalidInputException("couldn't find clue " + clueNumber + " " + direction.toString() + " in puzzle: " + puzzleId);
     }
 
+    /**
+     * Get the value for the board in the Puzzle indicated by the specified puzzleId.
+     *
+     * @param puzzleId the puzzleId of the puzzle we want answered
+     * @return  the value of the board
+     */
     @Override
     public List<List<String>> getBoardAnswer(String puzzleId) {
         Puzzle puzzle = puzzleManager.get(puzzleId);
 
         if (puzzle == null) {
-            throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
         if (puzzle.getBoard() != null) {
             return puzzle.getBoard();
         } else if (puzzle.getBoardV2() != null) {
-            return puzzle.getBoardV2().stream().map(row -> row.stream().map(Box::getValue).collect(Collectors.toList())).collect(Collectors.toList());
+            return PuzzleHelper.convertV2Board(puzzle.getBoardV2());
         }
 
         throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);

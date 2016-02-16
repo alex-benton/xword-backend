@@ -5,6 +5,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 
 /**
+ * An object representing the response to a 'get clue answer' request. 'answer' will contain the values
+ * of each Box for a single Clue.
+ *
  * @author alex
  */
 public class GetClueAnswerResponse {

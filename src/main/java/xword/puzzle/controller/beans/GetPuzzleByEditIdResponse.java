@@ -8,6 +8,9 @@ import xword.puzzle.objects.PuzzleMetadata;
 import java.util.List;
 
 /**
+ * An object representing the response to a 'get puzzle' request. Returns all the information we have
+ * about a Puzzle.
+ *
  * @author alex
  */
 public class GetPuzzleByEditIdResponse {

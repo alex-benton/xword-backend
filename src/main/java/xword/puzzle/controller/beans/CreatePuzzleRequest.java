@@ -6,6 +6,8 @@ import xword.puzzle.objects.PuzzleMetadata;
 import java.util.List;
 
 /**
+ * An object representing a request to create a puzzle.
+ *
  * @author alex
  */
 public class CreatePuzzleRequest {

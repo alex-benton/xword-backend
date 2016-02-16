@@ -4,6 +4,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import xword.puzzle.objects.Puzzle;
 
 /**
+ * Datastore for Puzzles. Supports basic CRUD operations.
+ *
+ * Auto-implemented due to magic.
+ *
  * @author alex
  */
 public interface PuzzleRepository extends MongoRepository<Puzzle, String> {

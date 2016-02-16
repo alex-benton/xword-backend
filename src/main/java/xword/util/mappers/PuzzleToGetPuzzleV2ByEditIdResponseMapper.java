@@ -5,6 +5,7 @@ import xword.puzzle.controller.beans.GetPuzzleByEditIdResponse;
 import xword.puzzle.controller.beans.GetPuzzleV2ByEditIdResponse;
 import xword.puzzle.objects.Box;
 import xword.puzzle.objects.Puzzle;
+import xword.puzzle.util.PuzzleHelper;
 import xword.util.EntityMappingStrategy;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Maps a Puzzle to a GetPuzzleV2ByEditIdResponse object.
+ *
  * @author alex
  */
 @Component
@@ -31,7 +34,8 @@ public class PuzzleToGetPuzzleV2ByEditIdResponseMapper implements EntityMappingS
         if (source.getBoardV2() != null) {
             result.setBoard(source.getBoardV2());
         } else {
-            result.setBoard(this.mapLegacyBoard(source.getBoard()));
+            // if we have a V1 board, convert it to a V2 board for the response.
+            result.setBoard(PuzzleHelper.convertV1Board(source.getBoard()));
         }
 
         result.setMetadata(source.getMetadata());
@@ -39,22 +43,5 @@ public class PuzzleToGetPuzzleV2ByEditIdResponseMapper implements EntityMappingS
         result.setModifiedDate(source.getModifiedDate());
 
         return result;
-    }
-
-    private List<List<Box>> mapLegacyBoard(List<List<String>> board) {
-        if (board == null) {
-            return null;
-        } else {
-            return board.stream().map(
-                    row -> row.stream().map(
-                            (string) -> {
-                                Box b = new Box();
-                                b.setAttributes(null);
-                                b.setValue(string);
-                                return b;
-                            }
-                    ).collect(Collectors.toList())
-                ).collect(Collectors.toList());
-        }
     }
 }

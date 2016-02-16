@@ -7,6 +7,8 @@ import xword.puzzle.objects.PuzzleMetadata;
 import java.util.List;
 
 /**
+ * An object representing a request to update a puzzle.
+ *
  * @author alex
  */
 public class UpdatePuzzleRequest {

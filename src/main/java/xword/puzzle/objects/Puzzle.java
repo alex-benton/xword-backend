@@ -5,17 +5,19 @@ import org.springframework.data.annotation.Id;
 import java.util.List;
 
 /**
- * Created by alex on 12/13/15.
+ * Object representing a crossword puzzle.
+ *
+ * @author alex
  */
 public class Puzzle {
 
     @Id
-    private String puzzleId;
-    private String puzzleEditId;
-    private List<List<String>> board;
-    private List<List<Box>> boardV2;
-    private List<Clue> clues;
-    private PuzzleMetadata metadata;
+    private String puzzleId; // the unique id for this puzzle. used when solving this puzzle.
+    private String puzzleEditId; // another unique id for this puzzle. used when editing this puzzle.
+    private List<List<String>> board; // the v1 game board data structure
+    private List<List<Box>> boardV2; // the v2 game board data structure
+    private List<Clue> clues; // the list of clues
+    private PuzzleMetadata metadata; // the metadata for this puzzle
     private Long createdDate;
     private Long modifiedDate;
 

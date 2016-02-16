@@ -8,15 +8,19 @@ import java.nio.LongBuffer;
 import java.util.UUID;
 
 /**
+ * Generate unique editIds that are friendly enough to put in URLs.
  *
  * http://stackoverflow.com/questions/772802/storing-uuid-as-base64-string/18057117#18057117
- *
- * @author alex
  */
 public class IdGenerator {
 
     private static Base64 ENCODER = new Base64(true);
 
+    /**
+     * Create a unique, url-safe key.
+     *
+     * @return the generated key
+     */
     public static String generate(){
         UUID uuid = UUID.randomUUID();
         byte[] uuidArray = IdGenerator.toByteArray(uuid);
@@ -26,10 +30,15 @@ public class IdGenerator {
         return returnValue;
     }
 
+    /**
+     * Decode a generated key back to UUID format.
+     *
+     * @param key a generated key
+     * @return the original UUID
+     */
     public static UUID decode(String key){
         UUID returnValue = null;
         if(StringUtils.isNotBlank(key)){
-            // Convert base64 string to a byte array
             byte[] decodedArray = ENCODER.decode(key);
             returnValue = IdGenerator.fromByteArray(decodedArray);
         }

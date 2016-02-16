@@ -3,6 +3,10 @@ package xword.puzzle.manager;
 import xword.puzzle.objects.Puzzle;
 
 /**
+ * Interface containing helpful functions around Puzzle resources.
+ *
+ * Contains get, save, update functionality.
+ *
  * @author alex
  */
 public interface PuzzleManager {

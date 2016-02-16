@@ -3,12 +3,19 @@ package xword.puzzle.controller.beans;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
+ * An object representing a request to get the box value at the provided coordinates.
+ *
  * @author alex
  */
 public class GetCharAnswerRequest {
 
     private int x;
     private int y;
+
+    public GetCharAnswerRequest(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public int getX() {
         return x;

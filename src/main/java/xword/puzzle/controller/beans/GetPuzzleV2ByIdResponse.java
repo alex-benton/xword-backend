@@ -9,6 +9,14 @@ import xword.puzzle.objects.PuzzleMetadata;
 import java.util.List;
 
 /**
+ * An object representing the response to a 'get puzzle' request. Returns a santized version of the
+ * information we have about a Puzzle.
+ *
+ * In comparison with GetPuzzleV2ByEditIdResponse, this object returns a modified version of the Board and Clue data
+ * structures with the puzzle answers removed.
+ *
+ * A V2 puzzle uses Box objects for the board, instead of strings.
+ *
  * @author alex
  */
 public class GetPuzzleV2ByIdResponse {

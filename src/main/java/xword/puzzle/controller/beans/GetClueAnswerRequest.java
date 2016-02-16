@@ -4,12 +4,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import xword.puzzle.objects.Direction;
 
 /**
+ * An object representing a request to get the answer for the clue with specified number and direction.
+ *
  * @author alex
  */
 public class GetClueAnswerRequest {
 
     private int number;
     private Direction direction;
+
+    public GetClueAnswerRequest(int number, Direction direction) {
+        this.number = number;
+        this.direction = direction;
+    }
 
     public int getNumber() {
         return number;

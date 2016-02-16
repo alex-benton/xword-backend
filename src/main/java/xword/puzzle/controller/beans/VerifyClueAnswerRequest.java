@@ -6,6 +6,8 @@ import xword.puzzle.objects.Direction;
 import java.util.List;
 
 /**
+ * An object representing a request to verify the answer for the clue with specified number and direction.
+ *
  * @author alex
  */
 public class VerifyClueAnswerRequest {

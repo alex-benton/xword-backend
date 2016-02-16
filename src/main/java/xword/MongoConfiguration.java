@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Collections;
 
 /**
- * Set up our database based on the configuration set in the application configs.
+ * Set up our database based on the configuration set in the system environment.
  *
  * Spring magic happens here.
  *
