@@ -135,11 +135,30 @@ public class AnswerManagerImpl implements AnswerManager {
             throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
-        if (y >= puzzle.getBoard().size() || x >= puzzle.getBoard().get(y).size()) {
-            throw new InvalidInputException("the provided coordinates (" + x + "," + y + ") were out of range of puzzle: " + puzzleId);
+        // try to get the v2 board first before failing back to v1
+        if (puzzle.getBoardV2() != null) {
+            if (y >= puzzle.getBoardV2().size() || x >= puzzle.getBoardV2().get(y).size()) {
+                throw new InvalidInputException("the provided coordinates (" +
+                                                x +
+                                                "," +
+                                                y +
+                                                ") were out of range of puzzle: " +
+                                                puzzleId);
+            }
+            return puzzle.getBoardV2().get(y).get(x).getValue();
+        } else if (puzzle.getBoard() != null) {
+            if (y >= puzzle.getBoard().size() || x >= puzzle.getBoard().get(y).size()) {
+                throw new InvalidInputException("the provided coordinates (" +
+                                                x +
+                                                "," +
+                                                y +
+                                                ") were out of range of puzzle: " +
+                                                puzzleId);
+            }
+            return puzzle.getBoard().get(y).get(x);
+        } else {
+            throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
-
-        return puzzle.getBoard().get(y).get(x);
     }
 
     /**
@@ -182,10 +201,10 @@ public class AnswerManagerImpl implements AnswerManager {
             throw new PuzzleNotFoundException("couldn't find puzzle for puzzleId: " + puzzleId);
         }
 
-        if (puzzle.getBoard() != null) {
-            return puzzle.getBoard();
-        } else if (puzzle.getBoardV2() != null) {
+        if (puzzle.getBoardV2() != null) {
             return PuzzleHelper.convertV2Board(puzzle.getBoardV2());
+        } else if (puzzle.getBoard() != null) {
+            return puzzle.getBoard();
         }
 
         throw new InvalidInputException("couldn't find puzzle for puzzleId: " + puzzleId);
